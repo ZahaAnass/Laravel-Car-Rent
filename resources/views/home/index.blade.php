@@ -3,8 +3,15 @@
 @section("title", "Home")
 
 @section("content")
-    <x-card />
-    <x-admin.card />
+    <x-card >
+        <x-slot:title>
+            Card Title 1
+        </x-slot:title>
+            Card Content 1
+        <x-slot name="footer">
+            Card Footer 1
+        </x-slot>
+    </x-card>
     <!-- Home Slider -->
     <section class="hero-slider">
       <!-- Carousel wrapper -->
