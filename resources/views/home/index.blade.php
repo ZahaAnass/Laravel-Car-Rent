@@ -9,7 +9,7 @@
     @endphp
     <x-card :$color :$bgColor lang="en" class="card-rounded">
     {{-- <x-card :color="$color" :bgColor="$bgColor"> --}}
-        <x-slot:title>
+        <x-slot:title class="card-header-blue">
             Card Title 1
         </x-slot:title>
             Card Content 1
