@@ -28,6 +28,18 @@ class SearchForm extends Component
         return view('components.search-form');
     }
 
+    /*
+        * Do not use these public properties or methods.
+        * - data
+        * - render
+        * - resolveView
+        * - shouldRender
+        * - view
+        * - withAttributes
+        * - withName
+    */
+
+
     public function test()
     {
         return "Somthing";
