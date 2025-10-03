@@ -17,6 +17,7 @@
             Card Footer 1
         </x-slot>
     </x-card>
+    
     <x-test-component>
         <p>Test Component</p>
     </x-test-component>
