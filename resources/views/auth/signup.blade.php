@@ -24,9 +24,9 @@
         <button class="btn btn-primary btn-login w-full">Register</button>
     </form>
 
-    <x-slot:footerLink>
+    @slot("footerLink")
         Already have an account? -
         <a href="/login"> Click here to login </a>
-    </x-slot:footerLink>
+    @endslot
 
 </x-guest-layout>
