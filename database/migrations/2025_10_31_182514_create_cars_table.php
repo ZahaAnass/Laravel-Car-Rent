@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("vin", 225);
             $table->integer("mileage");
             $table->foreignId("car_type_id")->constrained("car_types");
-            $table->foreignId("car_fuel_id")->constrained("car_fuels");
+            $table->foreignId("fuel_type_id")->constrained("fuel_types");
             $table->foreignId("user_id")->constrained("users");
             $table->foreignId("city_id")->constrained("cities");
             $table->string("address", 255);
