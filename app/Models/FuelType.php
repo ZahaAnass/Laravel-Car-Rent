@@ -19,5 +19,9 @@ class FuelType extends Model
 
     public $timestamps = false; // disable timestamps
 
+    protected $fillable = [
+        "name"
+    ];
+
 
 }

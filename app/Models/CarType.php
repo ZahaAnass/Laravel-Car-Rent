@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CarType extends Model
 {
     public $timestamps = false;
+
+    protected $fillable = [
+        "name"
+    ];
 }
