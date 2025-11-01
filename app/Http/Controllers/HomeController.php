@@ -9,17 +9,17 @@ class HomeController extends Controller
 {
     public function index(){
         // Select All Cars
-        $cars = Car::get();
+//        $cars = Car::get();
 
         // Select published Cars
-        $cars = Car::where("published_at", "!=", null)->get();
-        $cars = Car::whereNotNull('published_at')->get();
+//        $cars = Car::where("published_at", "!=", null)->get();
+//        $cars = Car::whereNotNull('published_at')->get();
 
         // Select the first car
-        $car = Car::whereNotNull("published_at")->first();
+//        $car = Car::whereNotNull("published_at")->first();
 
         // Select a car by its ID
-        $car = Car::find(3);
+//        $car = Car::find(3);
 
         // Select cars by order
             // $cars = Car::whereNotNull("published_at")
@@ -52,7 +52,7 @@ class HomeController extends Controller
             "model_id" => 1,
             "year" => 1900,
             "price" => 123,
-            "vin" => 123,
+            "vin" => "9999",
             "mileage" => 123,
             "car_type_id" => 1,
             "fuel_type_id" => 1,
@@ -75,6 +75,32 @@ class HomeController extends Controller
         // Approach 3
         // $car = new Car($carData);
         // $car->save();
+
+//        $car = Car::find(1);
+//        $car->price = 9999;
+//        $car->save();
+
+//        Car::updateOrCreate(
+//            ["vin" => '9999', "price" => 20000],
+//            $carData
+//        );
+
+//        Car::where("published_at", null)
+//            ->where("user_id", 1)
+//            ->update([
+//                "published_at" => now(),
+//            ]);
+
+//        $car = Car::find(7);
+//        $car->delete();
+//
+//        Car::destroy([5,6]);
+
+//        Car::where("published_at", null)
+//            ->where("user_id", 1)
+//            ->delete();
+
+        // Car::truncate(); // DANGER: deletes all records permanently
 
         return view("home.index");
     }
