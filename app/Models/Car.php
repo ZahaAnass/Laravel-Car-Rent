@@ -33,4 +33,15 @@ class Car extends Model
         'deleted_at'
     ];
 
+    public function features() {
+        return $this->hasOne(CarFeatures::class);
+    }
+
+    public function primaryImage() {
+        return $this->hasOne(CarImage::class)->oldestOfMany("position");
+    }
+
+
+
+
 }
