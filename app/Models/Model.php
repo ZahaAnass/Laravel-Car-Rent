@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Model extends EloquentModel
@@ -17,8 +17,8 @@ class Model extends EloquentModel
         'maker_id',
     ];
 
-    public function maker(): HasMany {
-        return $this->hasMany(Maker::class);
+    public function maker(): BelongsTo {
+        return $this->belongsTo(Maker::class);
     }
 
     public function cars(): HasMany {

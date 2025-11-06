@@ -28,6 +28,4 @@ class FuelType extends Model
         return $this->hasMany(Car::class);
     }
 
-
-
 }
