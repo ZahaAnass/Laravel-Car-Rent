@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Maker;
 use App\Models\Model;
 use App\Models\User;
@@ -44,10 +45,15 @@ class HomeController extends Controller
 //            ->hasModels(3) // each maker will have 3 models
 //            ->create();
 
-        // Relation: Many to One
-        Model::factory()
-            ->count(5)
-            ->forMaker(["name" => "test"]) // each model will belong to a maker
+//        // Relation: Many to One
+//        Model::factory()
+//            ->count(5)
+////            ->forMaker(["name" => "Lexus"]) // each model will belong to a maker
+////            ->for(Maker::factory()->state(["name" => "Lexus"])) // each model will belong to a maker
+//            ->create();
+
+        User::factory()
+            ->has(Car::factory()->count(5), "favouriteCars") // each user will have 5 favourite cars;
             ->create();
 
         return view("home.index");
