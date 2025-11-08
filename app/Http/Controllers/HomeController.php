@@ -13,49 +13,12 @@ class HomeController extends Controller
 {
     public function index(){
 
-//        $makers = Maker::factory()->count(10)->make();
-//        $makers = Maker::factory()->count(10)->create();
-//        dd($makers);
+        $cars = Car::where("published_at", "<=", now())
+            ->orderBy("published_at", "desc")
+            ->limit(30)
+            ->get();
 
-//        User::factory()->count(10)
-//            ->create([
-//                "name" => "Anass"
-//            ]); // create 10 user with name Anass
 
-//        User::factory()
-//            ->count(10)
-//            ->sequence(
-//                ["name" => "Anass"],
-//                ["name" => "Mohamed"],
-//                ["name" => "Youssef"],
-//            )->sequence(fn (Sequence $sequence) => [
-//                'name' => 'Name' . ($sequence->index + 1)
-//            ])->unverified() // make email_verified_at null
-//            ->create(); // create 10 user with name Anass, Mohamed, Youssef in sequence
-
-//        User::factory()
-//            ->afterMaking(function (User $user) {
-//                dump($user);
-//            })
-//            ->create();
-
-        // Relation: One to Many
-//        Maker::factory()
-//            ->count(5)
-//            ->hasModels(3) // each maker will have 3 models
-//            ->create();
-
-//        // Relation: Many to One
-//        Model::factory()
-//            ->count(5)
-////            ->forMaker(["name" => "Lexus"]) // each model will belong to a maker
-////            ->for(Maker::factory()->state(["name" => "Lexus"])) // each model will belong to a maker
-//            ->create();
-
-        User::factory()
-            ->has(Car::factory()->count(5), "favouriteCars") // each user will have 5 favourite cars;
-            ->create();
-
-        return view("home.index");
+        return view("home.index", ["cars" => $cars]);
     }
 }
