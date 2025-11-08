@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Car;
+use App\Models\CarImage;
 use App\Models\CarType;
 use App\Models\City;
 use App\Models\FuelType;
@@ -10,6 +12,7 @@ use App\Models\Model;
 use App\Models\State;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -104,6 +107,35 @@ class DatabaseSeeder extends Seeder
         // and for each user (from the last 2 user) create 50 cars
         // with images and features and add these cars to favourite cars
         // of these 2 users.
+
+        User::factory()
+            ->count(3)
+            ->create();
+
+        User::factory()
+            ->count(2)
+            ->has(
+                Car::factory()
+                    ->count(50)
+                    ->has(
+                        CarImage::factory()
+                            ->count(5)
+                            ->sequence(fn (Sequence $sequence) => [
+                                "position" => $sequence->index % 5 + 1
+                            ]),
+//                            ->sequence(
+//                                ["position" => 1],
+//                                ["position" => 2],
+//                                ["position" => 3],
+//                                ["position" => 4],
+//                                ["position" => 5],
+//                            ),
+                            "images"
+                        )
+                    ->hasFeatures(),
+                    "favouriteCars"
+                )->create();
+        ;
 
     }
 }
