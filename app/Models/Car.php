@@ -13,6 +13,15 @@ class Car extends Model
 {
     use SoftDeletes, HasFactory;
 
+//    protected $with = [
+//        "city",
+//        "maker",
+//        "model",
+//        "carType",
+//        "fuelType",
+//        "primaryImage"
+//    ];
+
     protected $fillable = [
         'maker_id',
         'model_id',
