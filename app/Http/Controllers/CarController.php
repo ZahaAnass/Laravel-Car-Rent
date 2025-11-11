@@ -77,7 +77,7 @@ class CarController extends Controller
             ->with(["city", "maker", "model", "carType", "fuelType", "primaryImage"])
             ->orderBy("published_at", "desc");
 
-        $cars = $query->paginate(15);
+        $cars = $query->paginate(5);
 
         return view("car.search", [
             "cars" => $cars,
