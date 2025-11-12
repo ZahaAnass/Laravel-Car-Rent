@@ -183,4 +183,23 @@ class CarController extends Controller
 
         return view("car.watchlist", ["cars" => $cars]);
     }
+
+    public function toggleFavourite($carId)
+    {
+        $car = Car::findOrFail($carId);
+        $user = User::where("id", $car->user_id)->first();
+
+        if($user->favouriteCars()->where("car_id", $carId)->exists()) {
+            $user->favouriteCars()->detach($carId);
+            return response()->json(['status' => 'removed']);
+        } else {
+            $user->favouriteCars()->attach($carId);
+            return response()->json(['status' => 'added']);
+        }
+    }
+
+    public function image(Car $car)
+    {
+        return view("car.image", ["car" => $car]);
+    }
 }
