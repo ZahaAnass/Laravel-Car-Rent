@@ -40,7 +40,6 @@
                 <option value="{{ $city->id }}" data-parent="{{ $city->state_id }}" style="display: none">
                     {{ $city->name }}
                 </option>
-
             @endforeach
         </select>
         </div>

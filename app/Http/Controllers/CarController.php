@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\CarType;
+use App\Models\City;
+use App\Models\FuelType;
+use App\Models\Maker;
+use App\Models\Model;
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -70,16 +76,82 @@ class CarController extends Controller
         //
     }
 
-    public function search()
+    public function search(Request $request)
     {
         $query = Car::select("cars.*")->where("published_at", "<", now())
             ->with(["city", "maker", "model", "carType", "fuelType", "primaryImage"])
-            ->orderBy("published_at", "desc");
+            ;
 
-        $cars = $query->paginate(15);
+        // Filter by Maker
+        if ($request->filled('maker_id')) {
+            $query->where('maker_id', $request->maker_id);
+        }
+
+        // Filter by Model
+        if ($request->filled('model_id')) {
+            $query->where('model_id', $request->model_id);
+        }
+
+        // Filter by State (through City relation)
+        if ($request->filled('state_id')) {
+            $query->whereHas('city', function ($q) use ($request) {
+                $q->where('state_id', $request->state_id);
+            });
+        }
+
+        // Filter by City
+        if ($request->filled('city_id')) {
+            $query->where('city_id', $request->city_id);
+        }
+
+        // Filter by Car Type
+        if ($request->filled('car_type_id')) {
+            $query->where('car_type_id', $request->car_type_id);
+        }
+
+        // Filter by Year range
+        if ($request->filled('year_from')) {
+            $query->where('year', '>=', $request->year_from);
+        }
+        if ($request->filled('year_to')) {
+            $query->where('year', '<=', $request->year_to);
+        }
+
+        // Filter by Price range
+        if ($request->filled('price_from')) {
+            $query->where('price', '>=', $request->price_from);
+        }
+        if ($request->filled('price_to')) {
+            $query->where('price', '<=', $request->price_to);
+        }
+
+        // Filter by Fuel Type
+        if ($request->filled('fuel_type_id')) {
+            $query->where('fuel_type_id', $request->fuel_type_id);
+        }
+
+        // Mileage (optional)
+        if ($request->filled('mileage')) {
+            $query->where('mileage', '<=', $request->mileage);
+        }
+
+        $cars = $query->orderBy("published_at", "desc")->paginate(15)->appends($request->query());
+
+        $makers = Maker::distinct()->orderBy('name')->get();
+        $models = Model::distinct()->orderBy('name')->get();
+        $states = State::distinct()->orderBy('name')->get();
+        $cities = City::distinct()->orderBy('name')->get();
+        $carTypes = CarType::distinct()->orderBy('name')->get();
+        $fuelTypes = FuelType::distinct()->orderBy('name')->get();
 
         return view("car.search", [
             "cars" => $cars,
+            "makers" => $makers,
+            "models" => $models,
+            "states" => $states,
+            "cities" => $cities,
+            "carTypes" => $carTypes,
+            "fuelTypes" => $fuelTypes,
         ]);
     }
 

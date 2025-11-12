@@ -32,7 +32,7 @@ class CarFactory extends Factory
             "year" => fake()->numberBetween(1998, 2026),
             "price" => ((int)fake()->randomFloat(2, 5, 100)) * 100,
             "vin" => strtoupper(Str::random(17)),
-            "mileage" => ((int)fake()->randomFloat(2, 5, 100)) * 100,
+            "mileage" => ((int)fake()->randomFloat(2, 5, 100)) * 1000,
             "car_type_id" => CarType::inRandomOrder()->first()->id,
             "fuel_type_id" => FuelType::inRandomOrder()->first()->id,
             "user_id" => User::inRandomOrder()->first()->id,
