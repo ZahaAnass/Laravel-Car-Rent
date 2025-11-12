@@ -9,7 +9,7 @@
       <input type="password" placeholder="Your Password" />
     </div>
     <div class="text-right mb-medium">
-      <a href="/password-reset.html" class="auth-page-password-reset">Reset Password</a>
+      <a href="{{ route("password-reset") }}" class="auth-page-password-reset">Reset Password</a>
     </div>
     <button class="btn btn-primary btn-login w-full">Login</button>
   </form>
