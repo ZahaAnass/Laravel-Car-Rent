@@ -135,12 +135,20 @@ class CarController extends Controller
             $query->where('mileage', '<=', $request->mileage);
         }
 
-        // Order By Price
+        // Ordering
         if ($request->filled('sort')) {
             if ($request->sort === 'price') {
                 $query->orderBy('price', 'asc');
             } elseif ($request->sort === '-price') {
                 $query->orderBy('price', 'desc');
+            } elseif ($request->sort === 'year') {
+                $query->orderBy('year', 'asc');
+            } elseif ($request->sort === '-year') {
+                $query->orderBy('year', 'desc');
+            } elseif ($request->sort === 'mileage') {
+                $query->orderBy('mileage', 'asc');
+            } elseif ($request->sort === '-mileage') {
+                $query->orderBy('mileage', 'desc');
             }
         }
 

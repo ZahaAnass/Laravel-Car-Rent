@@ -20,6 +20,10 @@
                             <option value="">Order By</option>
                             <option value="price" {{ request('sort') == 'price' ? 'selected' : '' }}>Price Asc</option>
                             <option value="-price" {{ request('sort') == '-price' ? 'selected' : '' }}>Price Desc</option>
+                            <option value="year" {{ request('sort') == 'year' ? 'selected' : '' }}>Year Asc</option>
+                            <option value="-year" {{ request('sort') == '-year' ? 'selected' : '' }}>Year Desc</option>
+                            <option value="mileage" {{ request('sort') == 'mileage' ? 'selected' : '' }}>Mileage Asc</option>
+                            <option value="-mileage" {{ request('sort') == '-mileage' ? 'selected' : '' }}>Mileage Desc</option>
                         </select>
                     </form>
                 </div>
