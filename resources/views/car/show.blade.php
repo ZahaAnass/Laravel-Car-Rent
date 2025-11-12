@@ -118,15 +118,25 @@
                             <div class="text-muted">{{ $car->owner->cars->count() }} cars</div>
                         </div>
                     </div>
-                    <a href="tel:{{ \Illuminate\Support\Str::mask($car->phone, "*", -3) }}" class="car-details-phone"> <!-- Masking last 3 digits of phone number -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" style="width: 16px">
+                    <a href="tel:{{ $car->phone }}" class="car-details-phone">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" style="width: 16px">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
                         </svg>
 
-                        {{\Illuminate\Support\Str::mask($car->phone, "*", -3)}}
-                        <span class="car-details-phone-view">view full number</span>
+                        <!-- Masked -->
+                        <span class="masked-phone">{{ \Illuminate\Support\Str::mask($car->phone, "*", -3) }}</span>
+                        <!-- Full -->
+                        <span class="displayed-phone" style="display: none;">{{ $car->phone }}</span>
+
+                        <!-- Toggle links -->
+                        <span class="car-details-phone-view show-number" style="cursor:pointer; color:#007bff;">
+                            View full number
+                        </span>
+                        <span class="car-details-phone-view hide-number" style="display:none; cursor:pointer; color:#007bff;">
+                            Hide number
+                        </span>
                     </a>
                 </div>
             </div>

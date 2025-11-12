@@ -239,3 +239,28 @@ setTimeout(() => {
     bsAlert.close();
 }
     }, 4000); // auto close after 4 seconds
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.car-details-phone').forEach(function(phoneBlock) {
+        const masked = phoneBlock.querySelector('.masked-phone');
+        const full = phoneBlock.querySelector('.displayed-phone');
+        const showBtn = phoneBlock.querySelector('.show-number');
+        const hideBtn = phoneBlock.querySelector('.hide-number');
+
+        showBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            masked.style.display = 'none';
+            full.style.display = 'inline';
+            showBtn.style.display = 'none';
+            hideBtn.style.display = 'inline';
+        });
+
+        hideBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            masked.style.display = 'inline';
+            full.style.display = 'none';
+            showBtn.style.display = 'inline';
+            hideBtn.style.display = 'none';
+        });
+    });
+});

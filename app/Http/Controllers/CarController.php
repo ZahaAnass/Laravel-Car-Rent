@@ -33,7 +33,21 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view("car.create");
+        $makers = Maker::distinct()->orderBy('name')->get();
+        $models = Model::distinct()->orderBy('name')->get();
+        $states = State::distinct()->orderBy('name')->get();
+        $cities = City::distinct()->orderBy('name')->get();
+        $carTypes = CarType::distinct()->orderBy('name')->get();
+        $fuelTypes = FuelType::distinct()->orderBy('name')->get();
+
+        return view("car.create", [
+            "makers" => $makers,
+            "models" => $models,
+            "states" => $states,
+            "cities" => $cities,
+            "carTypes" => $carTypes,
+            "fuelTypes" => $fuelTypes,
+        ]);
     }
 
     /**
