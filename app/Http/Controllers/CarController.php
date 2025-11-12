@@ -73,7 +73,12 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        try {
+            $car->delete();
+            return redirect()->back()->with('success', 'Car deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete car. Please try again.');
+        }
     }
 
     public function search(Request $request)
