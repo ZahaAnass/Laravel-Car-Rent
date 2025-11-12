@@ -15,12 +15,13 @@
                         </button>
                         <h2>Define your search criteria</h2>
                     </div>
-
-                    <select class="sort-dropdown">
-                        <option value="">Order By</option>
-                        <option value="price">Price Asc</option>
-                        <option value="-price">Price Desc</option>
-                    </select>
+                    <form method="get" action="{{ route('car.search') }}">
+                        <select class="sort-dropdown" name="sort" onchange="this.form.submit()">
+                            <option value="">Order By</option>
+                            <option value="price" {{ request('sort') == 'price' ? 'selected' : '' }}>Price Asc</option>
+                            <option value="-price" {{ request('sort') == '-price' ? 'selected' : '' }}>Price Desc</option>
+                        </select>
+                    </form>
                 </div>
                 <div class="search-car-results-wrapper">
                     <div class="search-cars-sidebar">

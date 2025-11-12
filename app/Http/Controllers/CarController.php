@@ -135,6 +135,16 @@ class CarController extends Controller
             $query->where('mileage', '<=', $request->mileage);
         }
 
+        // Order By Price
+        if ($request->filled('sort')) {
+            if ($request->sort === 'price') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->sort === '-price') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+
+
         $cars = $query->orderBy("published_at", "desc")->paginate(15)->appends($request->query());
 
         $makers = Maker::distinct()->orderBy('name')->get();
