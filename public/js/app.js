@@ -231,3 +231,11 @@ document.addEventListener("DOMContentLoaded", function () {
     distance: "50%",
   });
 });
+
+setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+    const bsAlert = new bootstrap.Alert(alert);
+    bsAlert.close();
+}
+    }, 4000); // auto close after 4 seconds

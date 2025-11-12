@@ -1437,3 +1437,54 @@ a.pagination-item:hover {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+.alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 15px auto;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.3s ease;
+    position: relative;
+}
+
+/* ✅ Success */
+.success-alert {
+    background-color: #f2fbf4;
+    border: 1px solid #c6e9cc;
+    color: #1a7b3b;
+}
+
+/* ❌ Error */
+.error-alert {
+    background-color: #fdf3f3;
+    border: 1px solid #f0c4c4;
+    color: #b42318;
+}
+
+/* Close button (small circle style like your screenshot) */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #777;
+    cursor: pointer;
+    padding: 0 4px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
