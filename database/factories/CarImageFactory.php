@@ -17,11 +17,17 @@ class CarImageFactory extends Factory
      */
     public function definition(): array
     {
+
+        $carFolders = [
+            'Lexus-RX200t-2016',
+        ];
+
+        $folder = fake()->randomElement($carFolders);
+        $imageNumber = fake()->numberBetween(1, 7);
+
         return [
-            "image_path" => fake()->imageUrl(),
-            "position" => function (array $attributes) {
-                return Car::find($attributes['car_id'])->images()->count() + 1;
-            },
+            'image_path' => "/img/cars/{$folder}/{$imageNumber}.jpeg",
+            'position' => $imageNumber,
         ];
     }
 }
