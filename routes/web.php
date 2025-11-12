@@ -18,3 +18,8 @@ Route::get("/signup", [SignupController::class, "create"])
 
 Route::get("/login", [LoginController::class, "create"])
 ->name("login");
+
+Route::post("/logout", [LoginController::class, "destroy"])->name("logout");
+
+Route::get("/password-reset", [LoginController::class, "passwordReset"])
+    ->name('password-reset');
