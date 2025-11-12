@@ -13,7 +13,6 @@ class CarController extends Controller
      */
     public function index()
     {
-
         $cars = User::find(1)
             ->cars()
             ->with(["maker", "model", "primaryImage"])
