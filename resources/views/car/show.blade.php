@@ -112,7 +112,7 @@
                     <hr />
 
                     <div class="flex gap-1 my-medium">
-                        <img src="/img/avatar.png" alt="" class="car-details-owner-image" />
+                        <img src="{{ asset('/img/avatar.png') }}" alt="" class="car-details-owner-image" />
                         <div>
                             <h3 class="car-details-owner">{{ $car->owner->name }}</h3>
                             <div class="text-muted">{{ $car->owner->cars->count() }} cars</div>

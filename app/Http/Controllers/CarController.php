@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\CarFeatures;
 use App\Models\CarType;
 use App\Models\City;
 use App\Models\FuelType;
@@ -71,7 +72,17 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        return view("car.edit");
+        $makers = Maker::orderBy('name')->get();
+        $models = Model::orderBy('name')->get();
+        $states = State::orderBy('name')->get();
+        $cities = City::orderBy('name')->get();
+        $carTypes = CarType::orderBy('name')->get();
+        $fuelTypes = FuelType::orderBy('name')->get();
+        $features = CarFeatures::where('car_id', $car->id)->first();
+
+        return view("car.edit", compact(
+            'car', 'makers', 'models', 'states', 'cities', 'carTypes', 'fuelTypes', 'features'
+        ));
     }
 
     /**

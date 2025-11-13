@@ -1488,3 +1488,56 @@ a.pagination-item:hover {
     from { opacity: 0; transform: translateY(-6px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* --- Car Form Image Preview Section --- */
+.car-form-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+    padding: 10px;
+    justify-content: flex-start;
+}
+
+.car-form-images img {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.car-form-images img:hover {
+    transform: scale(1.05);
+    border-color: #007bff;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.form-image-upload {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background: #fafafa;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.form-image-upload:hover {
+    border-color: #007bff;
+}
+
+.upload-placeholder svg {
+    color: #999;
+    width: 48px;
+    height: 48px;
+}
+
+@media (max-width: 768px) {
+    .car-form-images img {
+        width: 100%;
+        height: auto;
+    }
+}
