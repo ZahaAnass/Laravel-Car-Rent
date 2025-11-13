@@ -2,14 +2,24 @@
     <main>
         <div class="container-small">
             <h1 class="car-details-page-title">Add new car</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('car.store') }}" method="POST" enctype="multipart/form-data" class="card add-new-car-form">
+                @csrf
                 <div class="form-content">
                     <div class="form-details">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label>Maker</label>
-                                    <select id="makerSelect" name="maker_id">
+                                    <select required id="makerSelect" name="maker_id" required>
                                         <option value="">Maker</option>
                                         @foreach($makers as $maker)
                                             <option value="{{ $maker->id }}" {{ request('maker_id') == $maker->id ? 'selected' : '' }}>
@@ -23,7 +33,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Model</label>
-                                    <select id="modelSelect" name="model_id">
+                                    <select required id="modelSelect" name="model_id">
                                         <option value="">Model</option>
                                         @foreach($models as $model)
                                             <option value="{{ $model->id }}"
@@ -39,7 +49,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Year</label>
-                                    <select name="year">
+                                    <select required name="year">
                                         <option value="">Year</option>
                                         @for($year = date('Y'); $year >= 1990; $year--)
                                             <option value="{{ $year }}">{{ $year }}</option>
@@ -54,7 +64,7 @@
                                 @foreach($carTypes as $carType)
                                 <div class="col">
                                     <label class="inline-radio">
-                                        <input type="radio" name="car_type" value="{{ $carType->id }}" />
+                                        <input required type="radio" name="car_type_id" value="{{ $carType->id }}" />
                                         {{ $carType->name }}
                                     </label>
                                 </div>
@@ -66,19 +76,19 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input type="number" placeholder="Price" />
+                                    <input required name="price" type="number" min="0" placeholder="Price" />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Vin Code</label>
-                                    <input placeholder="Vin Code" />
+                                    <input required placeholder="Vin Code" name="vin"/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Mileage (km)</label>
-                                    <input placeholder="Mileage" />
+                                    <input required placeholder="Mileage" name="mileage" />
                                 </div>
                             </div>
                         </div>
@@ -88,7 +98,7 @@
                                 @foreach($fuelTypes as $fuelType)
                                     <div class="col">
                                         <label class="inline-radio">
-                                            <input type="radio" name="fuel_type" value="{{ $fuelType->id }}" />
+                                            <input required type="radio" name="fuel_type_id" value="{{ $fuelType->id }}" />
                                             {{ $fuelType->name }}
                                         </label>
                                     </div>
@@ -100,7 +110,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>State/Region</label>
-                                    <select id="stateSelect" name="state_id">
+                                    <select required id="stateSelect" name="state_id">
                                         <option value="" {{ !request('state_id') ? 'selected' : '' }}>State/Region</option>
                                         @foreach($states as $state)
                                             <option value="{{ $state->id }}" {{ request('state_id') == $state->id ? 'selected' : '' }}>
@@ -113,7 +123,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>City</label>
-                                    <select id="citySelect" name="city_id">
+                                    <select required id="citySelect" name="city_id">
                                         <option value="" {{ !request('city_id') ? 'selected' : '' }}>City</option>
                                         @foreach($cities as $city)
                                             <option value="{{ $city->id }}"
@@ -131,13 +141,13 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <input placeholder="Address" />
+                                    <input required placeholder="Address" name="address"/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Phone</label>
-                                    <input placeholder="Phone" />
+                                    <input required placeholder="Phone" name="phone" />
                                 </div>
                             </div>
                         </div>
@@ -172,7 +182,7 @@
                         </div>
                         <div class="form-group">
                             <label>Detailed Description</label>
-                            <textarea rows="10"></textarea>
+                            <textarea required name="description" rows="10"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="checkbox">
@@ -190,7 +200,7 @@
                                         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
                             </div>
-                            <input id="carFormImageUpload" type="file" multiple />
+                            <input required id="carFormImageUpload" type="file" name="image" />
                         </div>
                         <div id="imagePreviews" class="car-form-images"></div>
                     </div>
