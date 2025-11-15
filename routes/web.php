@@ -12,6 +12,9 @@ Route::get("/", [HomeController::class, "index"])
 Route::get("/car/search", [CarController::class, "search"])->name("car.search");
 Route::get("/car/watchlist", [CarController::class, "watchlist"])->name("car.watchlist");
 Route::get("/car/image/{car}", [CarController::class, "image"])->name("car.image");
+Route::post('/car/{car}/image', [CarController::class, 'addImage'])->name('car.addImage');
+Route::post('/car/{car}/images/positions', [CarController::class, 'updatePositions'])->name('car.updatePositions');
+Route::post('/car/{car}/images/delete', [CarController::class, 'deleteImages'])->name('car.deleteImages');
 Route::resource("car", CarController::class);
 Route::post('/favourite/{carId}', [CarController::class, 'toggleFavourite'])->name('favourite.toggle');
 

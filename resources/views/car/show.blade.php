@@ -1,6 +1,19 @@
 <x-app-layout>
     <main>
         <div class="container">
+            @if (session('success'))
+                <div class="alert success-alert">
+                    <span><strong>✅ Success:</strong> {{ session('success') }}</span>
+                    <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert error-alert">
+                    <span><strong>❌ Error:</strong> {{ session('error') }}</span>
+                    <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+                </div>
+            @endif
             <h1 class="car-details-page-title">{{ $car->maker->name }} {{ $car->model->name }} - {{ $car->year }}</h1>
             <div class="car-details-region">{{ $car->city->name }} - {{ $car->published_at }}</div>
 

@@ -21,7 +21,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = User::find(1)
+        $cars = User::find(4)
             ->cars()
             ->with(["maker", "model", "primaryImage"])
             ->orderBy("created_at", "desc")
@@ -109,7 +109,6 @@ class CarController extends Controller
                 'position' => 1,
             ]);
 
-
         }
 
 
@@ -161,8 +160,70 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        try {
+            $request->validate([
+                'maker_id' => 'required|exists:makers,id',
+                'model_id' => 'required|exists:models,id',
+                'year' => 'required|integer|min:1900|max:' . date('Y'),
+                'price' => 'required|numeric|min:0',
+                'vin' => 'required|string|max:50',
+                'mileage' => 'required|integer|min:0',
+                'city_id' => 'required|exists:cities,id',
+                'car_type_id' => 'required|exists:car_types,id',
+                'fuel_type_id' => 'required|exists:fuel_types,id',
+                'address' => 'required|string|max:255',
+                'phone' => 'required|string|max:20',
+                'description' => 'required|string',
+            ]);
+
+            // 2. Update car data
+            $car->update([
+                'maker_id' => $request->maker_id,
+                'model_id' => $request->model_id,
+                'year' => $request->year,
+                'price' => $request->price,
+                'vin' => $request->vin,
+                'mileage' => $request->mileage,
+                'city_id' => $request->city_id,
+                'car_type_id' => $request->car_type_id,
+                'fuel_type_id' => $request->fuel_type_id,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'description' => $request->description,
+
+                // If checkbox checked => publish, else unpublish
+                'published_at' => $request->has('published') ? now() : null,
+            ]);
+
+            // 3. Update Features (table car_features)
+            $features = [
+                'air_conditioning',
+                'power_windows',
+                'power_door_locks',
+                'abs',
+                'remote_start',
+                'gps_navigation',
+                'heated_seats',
+                'climate_control',
+                'rear_parking_sensors',
+                'leather_seats',
+            ];
+
+            // Check if features row exists
+            $carFeatures = CarFeatures::firstOrNew(['car_id' => $car->id]);
+
+            foreach ($features as $f) {
+                $carFeatures->$f = isset($request->features[$f]);
+            }
+            $carFeatures->save();
+
+        } catch (\Exception $e){
+            return redirect()->back()->with('error', 'Failed to update car. Please try again.');
+        }
+
+        return redirect()->route('car.show', $car)->with('success', 'Car updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -303,4 +364,46 @@ class CarController extends Controller
     {
         return view("car.image", ["car" => $car]);
     }
+
+    public function addImage(Request $request, Car $car)
+    {
+        $request->validate([
+            'image' => 'required|image|max:8192', // Max 8MB
+        ]);
+
+        $path = $request->file('image')->store('cars', 'public');
+
+        $car->images()->create([
+            'image_path' => '/storage/' . $path,
+            'position' => $car->images()->max('position') + 1
+        ]);
+
+        return back()->with('success', 'Image added successfully.');
+    }
+
+    public function updatePositions(Request $request, Car $car)
+    {
+        $request->validate([
+            'positions' => 'required|array',
+            'positions.*' => 'required|integer|min:1',
+        ]);
+
+        foreach ($request->positions as $id => $pos) {
+            $car->images()->where('id', $id)->update([
+                'position' => $pos
+            ]);
+        }
+
+        return back()->with('success', 'Positions updated.');
+    }
+
+    public function deleteImages(Request $request, Car $car)
+    {
+        $ids = $request->delete_images;
+
+        $car->images()->whereIn('id', $ids)->delete();
+
+        return back()->with('success', 'Images deleted.');
+    }
+
 }

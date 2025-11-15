@@ -31,13 +31,13 @@
                             <tbody>
                                 @forelse($cars as $car)
                                     <tr>
-                                        <td>
-                                            <img src="{{ $car->primaryImage->image_path }}" alt=""
+                                        <td style="text-align: center">
+                                            <img src="{{ $car->primaryImage->image_path ?? '' }}" alt="car image"
                                                 class="my-cars-img-thumbnail" />
                                         </td>
                                         <td>{{ $car->year }} - {{ $car->maker->name }} {{ $car->model->name }}</td>
                                         <td>{{ $car->getCreateDate() }}</td>
-                                        <td>{{ $car->pubFlished_at ? "Yes" : "No" }}</td>
+                                        <td>{{ $car->published_at ? "Yes" : "No" }}</td>
                                         <td class="">
                                             <a href="{{ route('car.edit', $car) }}" class="btn btn-edit inline-flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
