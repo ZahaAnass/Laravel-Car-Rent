@@ -134,6 +134,22 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
+        $car = Car::where("id", $car->id)
+            ->with([
+                "city",
+                "maker",
+                "model",
+                "carType",
+                "fuelType",
+                "primaryImage"
+            ])
+            ->withExists([
+                "favouredUsers as is_favourite" => function ($query) {
+                    $query->where("user_id", 4);
+                }
+            ])
+            ->first();
+
         return view("car.show", ["car" => $car]);
     }
 
@@ -349,14 +365,14 @@ class CarController extends Controller
     public function toggleFavourite($carId)
     {
         $car = Car::findOrFail($carId);
-        $user = User::where("id", $car->user_id)->first();
+        $user = User::where("id", 4)->first();
 
         if($user->favouriteCars()->where("car_id", $carId)->exists()) {
             $user->favouriteCars()->detach($carId);
-            return response()->json(['status' => 'removed']);
+            return back()->with('status', 'Removed from favourites');
         } else {
             $user->favouriteCars()->attach($carId);
-            return response()->json(['status' => 'added']);
+            return back()->with('status', 'Added to favourites');
         }
     }
 

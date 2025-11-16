@@ -3,6 +3,12 @@
         <!-- New Cars -->
         <section>
             <div class="container">
+                @if (session('status'))
+                    <div class="alert success-alert">
+                        <span><strong>✅ Success:</strong> {{ session('status') }}</span>
+                        <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                @endif
                 <div class="flex justify-between items-center">
                     <h2>My Favourite Cars</h2>
                     @if($cars->total() > 0)

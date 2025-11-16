@@ -100,7 +100,9 @@
                 <h2>Latest Added Cars</h2>
                 <div class="car-items-listing">
                     @foreach($cars as $car)
-                        <x-car-item :$car/>
+                        <x-car-item :$car
+                            isInWatchlist="{{$car->is_favourite ? true : false}}"
+                        />
                     @endforeach
                 </div>
             </div>

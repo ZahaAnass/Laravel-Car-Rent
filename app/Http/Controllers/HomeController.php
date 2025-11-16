@@ -22,10 +22,14 @@ class HomeController extends Controller
                 "fuelType",
                 "primaryImage"
             ])
+            ->withExists([
+                "favouredUsers as is_favourite" => function ($query) {
+                    $query->where("user_id", 4);
+                }
+            ])
             ->orderBy("published_at", "desc")
             ->limit(30)
             ->get();
-
 
         return view("home.index", ["cars" => $cars]);
     }
