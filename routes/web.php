@@ -18,13 +18,19 @@ Route::post('/car/{car}/images/delete', [CarController::class, 'deleteImages'])-
 Route::resource("car", CarController::class);
 Route::post('/favourite/{carId}', [CarController::class, 'toggleFavourite'])->name('favourite.toggle');
 
-Route::get("/signup", [SignupController::class, "create"])
+Route::get("/signup", [SignupController::class, "index"])
 ->name("signup");
 
-Route::get("/login", [LoginController::class, "create"])
+Route::get("/login", [LoginController::class, "index"])
 ->name("login");
 
-Route::post("/logout", [LoginController::class, "destroy"])->name("logout");
+Route::post("/login", [LoginController::class, "login"])
+->name("login.post");
+
+Route::post("/signup", [SignupController::class, "signup"])
+->name("signup.post");
+
+Route::post("/logout", [LoginController::class, "logout"])->name("logout");
 
 Route::get("/password-reset", [LoginController::class, "passwordReset"])
     ->name('password-reset');

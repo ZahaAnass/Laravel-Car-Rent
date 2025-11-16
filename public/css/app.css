@@ -1541,3 +1541,10 @@ a.pagination-item:hover {
         height: auto;
     }
 }
+
+.text-red-500 {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+}
