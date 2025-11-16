@@ -30,7 +30,7 @@ Route::post("/login", [LoginController::class, "login"])
 Route::post("/signup", [SignupController::class, "signup"])
 ->name("signup.post");
 
-Route::post("/logout", [LoginController::class, "logout"])->name("logout");
+Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 
 Route::get("/password-reset", [LoginController::class, "passwordReset"])
     ->name('password-reset');
