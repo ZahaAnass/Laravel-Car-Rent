@@ -24,7 +24,7 @@ class HomeController extends Controller
             ])
             ->withExists([
                 "favouredUsers as is_favourite" => function ($query) {
-                    $query->where("user_id", 4);
+                    $query->where("user_id", auth()->id());
                 }
             ])
             ->orderBy("published_at", "desc")

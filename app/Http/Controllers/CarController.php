@@ -21,7 +21,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = User::find(4)
+        $cars = User::find(auth()->id())
             ->cars()
             ->with(["maker", "model", "primaryImage"])
             ->orderBy("created_at", "desc")
@@ -75,7 +75,7 @@ class CarController extends Controller
 
         // Create the car
         $car = Car::create([
-            'user_id' => auth()->id() ?? 4, // Temporary need to use authenticated user
+            'user_id' => auth()->id(),
             'maker_id' => $request->maker_id,
             'model_id' => $request->model_id,
             'year' => $request->year,
@@ -145,7 +145,7 @@ class CarController extends Controller
             ])
             ->withExists([
                 "favouredUsers as is_favourite" => function ($query) {
-                    $query->where("user_id", 4);
+                    $query->where("user_id", auth()->id());
                 }
             ])
             ->first();
@@ -353,8 +353,7 @@ class CarController extends Controller
 
     public function watchlist()
     {
-        // TODO we come back to this
-        $cars = User::find(4)
+        $cars = User::find(auth()->id())
             ->favouriteCars()
             ->with(["city", "maker", "model", "carType", "fuelType", "primaryImage"])
             ->paginate(15);
@@ -365,7 +364,7 @@ class CarController extends Controller
     public function toggleFavourite($carId)
     {
         $car = Car::findOrFail($carId);
-        $user = User::where("id", 4)->first();
+        $user = User::where("id", auth()->id())->first();
 
         if($user->favouriteCars()->where("car_id", $carId)->exists()) {
             $user->favouriteCars()->detach($carId);

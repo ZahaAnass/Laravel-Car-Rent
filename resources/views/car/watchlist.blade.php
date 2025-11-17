@@ -18,9 +18,13 @@
                     @endif
                 </div>
                 <div class="car-items-listing">
-                    @foreach($cars as $car)
-                        <x-car-item :$car :isInWatchlist="true" />
-                    @endforeach
+                    @if($cars->count() > 0)
+                        @foreach($cars as $car)
+                            <x-car-item :$car :isInWatchlist="true" />
+                        @endforeach
+                    @else
+                        <p style="text-align: start; width: 100%;">No cars found in your watchlist.</p>
+                    @endif
                 </div>
 
                 {{ $cars->onEachSide(1)->links() }}
