@@ -19,7 +19,7 @@ class SignupController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'confirmPassword' => 'required|same:password',
-            'phone' => 'required|string|max:15|min:10',
+            'phone' => 'required|string|max:15|min:10|unique:users',
         ], [
             'name.required' => 'Name is required.',
             'name.min' => 'Name must be at least 3 characters.',
