@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function passwordReset()
-    {
-        return view("auth.password-reset");
-    }
-
     public function logout()
     {
         Auth::logout();
