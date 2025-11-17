@@ -6,6 +6,8 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 
 Route::get("/", [HomeController::class, "index"])
 ->name("home");
@@ -33,8 +35,17 @@ Route::post("/signup", [SignupController::class, "signup"])
 
 Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 
-Route::get("/password-reset", [LoginController::class, "passwordReset"])
+Route::get("/password-reset", [ForgotPasswordController::class, "passwordReset"])
     ->name('password-reset');
+
+Route::post("/password-reset", [ForgotPasswordController::class, "sendResetLinkEmail"])
+    ->name('password-reset.post');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.update');
 
 // Route to redirect to Google's OAuth page
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
