@@ -131,9 +131,19 @@ class AdminCarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Car $car)
     {
-        //
+        $car = Car::where("id", $car->id)
+            ->with([
+                "city",
+                "maker",
+                "model",
+                "carType",
+                "fuelType",
+                "primaryImage"
+            ])->first();
+
+        return view("admin.cars.show", ["car" => $car]);
     }
 
     /**
