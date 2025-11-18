@@ -66,4 +66,24 @@ class AdminCarController extends Controller
     {
         //
     }
+
+    public function image(Car $car)
+    {
+
+    }
+
+    public function addImage(Car $car)
+    {
+
+    }
+
+    public function updatePositions(Car $car)
+    {
+
+    }
+
+    public function deleteImages(Car $car)
+    {
+
+    }
 }
