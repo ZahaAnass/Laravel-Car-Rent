@@ -1559,3 +1559,61 @@ a.pagination-item:hover {
     margin-top: 4px;
     display: block;
 }
+
+/* dashboard */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.admin-card {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s;
+    border: 1px solid #e6e6e6;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.admin-card-title {
+    font-size: 22px;
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.admin-card-count {
+    font-size: 16px;
+    margin: 0.5rem 0 1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.admin-card-link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--button-border-radius);
+    background-color: var(--primary-color);
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.admin-card-link:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.admin-footer {
+    background: #fff;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #e6e6e6;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'password',
+        "role",
         'email_verified_at',
     ];
 
@@ -50,6 +51,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     public function favouriteCars(): BelongsToMany {

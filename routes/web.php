@@ -9,6 +9,9 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminCarController;
+use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,4 +83,19 @@ Route::middleware(['auth'])->group(function () {
     // Since this is inside the 'auth' group, you must be logged in to see/create/edit cars.
     // If you want everyone to SEE cars but only users to CREATE them, move this outside (see note below).
     Route::resource("car", CarController::class);
+});
+
+Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(function () {
+    // Admin Dashboard
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // Car Images
+    Route::get("/car/image/{car}", [AdminCarController::class, "image"])->name("car.image");
+    Route::post('/car/{car}/image', [AdminCarController::class, 'addImage'])->name('car.addImage');
+    Route::post('/car/{car}/images/positions', [AdminCarController::class, 'updatePositions'])->name('car.updatePositions');
+    Route::post('/car/{car}/images/delete', [AdminCarController::class, 'deleteImages'])->name('car.deleteImages');
+
+    Route::resource('cars', AdminCarController::class); // manage cars
+    Route::resource('users', AdminUserController::class); // manage users
+    Route::get("/settings", [AdminController::class, "setting"])->name("settings");
 });

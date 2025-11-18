@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('google_id', 45)->nullable();
             $table->string('facebook_id', 45)->nullable();
+            $table->string("role")->default("user");
             $table->rememberToken();
             $table->timestamps();
         });
