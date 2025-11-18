@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class AdminCarController extends Controller
@@ -11,7 +12,11 @@ class AdminCarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = Car::with(["maker", "model", "primaryImage"])
+            ->orderBy("created_at", "desc")
+            ->paginate(15);
+
+        return view('admin.cars.index', compact('cars'));
     }
 
     /**

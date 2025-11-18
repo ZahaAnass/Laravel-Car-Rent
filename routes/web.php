@@ -90,10 +90,10 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Car Images
-    Route::get("/car/image/{car}", [AdminCarController::class, "image"])->name("car.image");
-    Route::post('/car/{car}/image', [AdminCarController::class, 'addImage'])->name('car.addImage');
-    Route::post('/car/{car}/images/positions', [AdminCarController::class, 'updatePositions'])->name('car.updatePositions');
-    Route::post('/car/{car}/images/delete', [AdminCarController::class, 'deleteImages'])->name('car.deleteImages');
+    Route::get("/car/image/{car}", [AdminCarController::class, "image"])->name("cars.image");
+    Route::post('/car/{car}/image', [AdminCarController::class, 'addImage'])->name('cars.addImage');
+    Route::post('/car/{car}/images/positions', [AdminCarController::class, 'updatePositions'])->name('cars.updatePositions');
+    Route::post('/car/{car}/images/delete', [AdminCarController::class, 'deleteImages'])->name('cars.deleteImages');
 
     Route::resource('cars', AdminCarController::class); // manage cars
     Route::resource('users', AdminUserController::class); // manage users
