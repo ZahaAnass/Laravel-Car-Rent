@@ -15,7 +15,26 @@
                 </div>
             @endif
             <div class="container">
-                <h1 class="car-details-page-title">All Cars</h1>
+                <div class="mb-medium flex justify-between items-center">
+                    <h1 class="car-details-page-title">All Cars</h1>
+                    <a href="{{ route('admin.cars.create') }}" class="btn btn-primary inline-flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            style="width: 18px; margin-right: 4px"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                            />
+                        </svg>
+                        Add New Car
+                    </a>
+                </div>
                 <div class="card p-medium">
                     <div class="table-responsive">
                         <table class="table">
