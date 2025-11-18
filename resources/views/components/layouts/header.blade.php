@@ -63,6 +63,11 @@
             <li>
                 <a href="{{ route("car.watchlist") }}">My Favourite Cars</a>
             </li>
+            @auth
+                <li>
+                    <a href="{{ route("profile") }}">My Profile</a>
+                </li>
+            @endauth
         </ul>
     </div>
     @auth

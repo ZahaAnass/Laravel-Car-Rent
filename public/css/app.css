@@ -1460,10 +1460,21 @@ a.pagination-item:hover {
     color: #1a7b3b;
 }
 
+/* ℹ️ Info */
+.info-alert {
+    background-color: #eff6ff;   /* Very light blue background */
+    color: #1e3a8a;              /* Dark blue text for readability */
+    border: 1px solid #dbeafe;   /* Thin border for definition */
+}
+
 /* ❌ Error */
 .error-alert {
     background-color: #fdf3f3;
     border: 1px solid #f0c4c4;
+    color: #b42318;
+}
+
+.error-text {
     color: #b42318;
 }
 
