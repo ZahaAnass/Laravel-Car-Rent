@@ -99,3 +99,4 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::resource('users', AdminUserController::class); // manage users
     Route::get("/settings", [AdminController::class, "setting"])->name("settings");
 });
+
