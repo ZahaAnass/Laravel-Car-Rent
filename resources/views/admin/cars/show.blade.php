@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin.layout>
     <main>
         <div class="container">
             @if (session('success'))
@@ -155,4 +155,4 @@
             </div>
         </div>
     </main>
-</x-app-layout>
+</x-admin.layout>

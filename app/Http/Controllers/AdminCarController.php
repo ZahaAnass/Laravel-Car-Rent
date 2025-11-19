@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\CarFeatures;
 use App\Models\CarType;
 use App\Models\City;
 use App\Models\FuelType;
@@ -149,17 +150,101 @@ class AdminCarController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Car $car)
     {
-        //
+        $makers = Maker::orderBy('name')->get();
+        $models = Model::orderBy('name')->get();
+        $states = State::orderBy('name')->get();
+        $cities = City::orderBy('name')->get();
+        $carTypes = CarType::orderBy('name')->get();
+        $fuelTypes = FuelType::orderBy('name')->get();
+        $features = CarFeatures::where('car_id', $car->id)->first();
+        $currentUserId = $car->user_id;
+        $users = User::where("role", "user")->orderBy("name")->get();
+
+        return view("admin.cars.edit", [
+            "car" => $car,
+            "makers" => $makers,
+            "models" => $models,
+            "states" => $states,
+            "cities" => $cities,
+            "carTypes" => $carTypes,
+            "fuelTypes" => $fuelTypes,
+            "features" => $features,
+            "currentUserId" => $currentUserId,
+            "users" => $users,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Car $car)
     {
-        //
+        try {
+            $request->validate([
+                "user_id" => 'required|exists:users,id',
+                'maker_id' => 'required|exists:makers,id',
+                'model_id' => 'required|exists:models,id',
+                'year' => 'required|integer|min:1900|max:' . date('Y'),
+                'price' => 'required|numeric|min:0',
+                'vin' => 'required|string|max:50',
+                'mileage' => 'required|integer|min:0',
+                'city_id' => 'required|exists:cities,id',
+                'car_type_id' => 'required|exists:car_types,id',
+                'fuel_type_id' => 'required|exists:fuel_types,id',
+                'address' => 'required|string|max:255',
+                'phone' => 'required|string|max:20',
+                'description' => 'required|string',
+            ]);
+
+            // 2. Update car data
+            $car->update([
+                'user_id' => $request->user_id,
+                'maker_id' => $request->maker_id,
+                'model_id' => $request->model_id,
+                'year' => $request->year,
+                'price' => $request->price,
+                'vin' => $request->vin,
+                'mileage' => $request->mileage,
+                'city_id' => $request->city_id,
+                'car_type_id' => $request->car_type_id,
+                'fuel_type_id' => $request->fuel_type_id,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'description' => $request->description,
+
+                // If checkbox checked => publish, else unpublish
+                'published_at' => $request->has('published') ? now() : null,
+            ]);
+
+            // 3. Update Features (table car_features)
+            $features = [
+                'air_conditioning',
+                'power_windows',
+                'power_door_locks',
+                'abs',
+                'remote_start',
+                'gps_navigation',
+                'heated_seats',
+                'climate_control',
+                'rear_parking_sensors',
+                'leather_seats',
+            ];
+
+            // Check if features row exists
+            $carFeatures = CarFeatures::firstOrNew(['car_id' => $car->id]);
+
+            foreach ($features as $f) {
+                $carFeatures->$f = isset($request->features[$f]);
+            }
+            $carFeatures->save();
+
+        } catch (\Exception $e){
+            return redirect()->back()->with('error', 'Failed to update car. Please try again.');
+        }
+
+        return redirect()->route('admin.cars.show', $car)->with('success', 'Car updated successfully!');
     }
 
     /**
@@ -167,7 +252,11 @@ class AdminCarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $car = Car::findOrFail($id);
+
+        $car->delete();
+
+        return redirect()->route('admin.cars.index')->with('success', 'Car deleted successfully!');
     }
 
     public function image(Car $car)

@@ -158,6 +158,10 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
+        if ($car->user_id !== auth()->id()) {
+            return redirect()->route('car.index')->with('error', 'You are not authorized to edit this car.');
+        }
+
         $makers = Maker::orderBy('name')->get();
         $models = Model::orderBy('name')->get();
         $states = State::orderBy('name')->get();
