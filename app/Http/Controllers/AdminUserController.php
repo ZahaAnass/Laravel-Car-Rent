@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -11,7 +12,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate(15);
+        return view("admin.users.index", compact("users"));
     }
 
     /**
@@ -57,8 +59,11 @@ class AdminUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if($user->delete()){
+            return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        }
+        return redirect()->route('admin.users.index')->with('error', 'Failed to delete user.');
     }
 }
