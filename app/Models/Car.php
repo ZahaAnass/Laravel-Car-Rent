@@ -36,7 +36,9 @@ class Car extends Model
         'address',
         'phone',
         'description',
-        'published_at'
+        'published_at',
+        'position',
+        'image_path'
     ];
 
     protected $guarded = [

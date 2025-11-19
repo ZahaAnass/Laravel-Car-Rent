@@ -261,21 +261,68 @@ class AdminCarController extends Controller
 
     public function image(Car $car)
     {
-
+        return view('admin.cars.image', ["car" => $car]);
     }
 
-    public function addImage(Car $car)
+    public function addImage(Request $request, Car $car)
     {
+        $request->validate([
+            'image' => 'required|image|max:8192', // Max 8MB
+        ],[
+            'image.required' => 'Please select an image to upload.',
+            'image.image' => 'The selected file must be an image.',
+            'image.max' => 'The image size must not exceed 8MB.',
+        ]);
 
+        $path = $request->file('image')->store('cars', 'public');
+
+        $car->images()->create([
+            'image_path' => '/storage/' . $path,
+            'position' => $car->images()->max('position') + 1
+        ]);
+
+        return back()->with('success', 'Image added successfully.');
     }
 
-    public function updatePositions(Car $car)
+    public function updatePositions(Request $request, Car $car)
     {
+        $request->validate([
+            'positions' => 'required|array',
+            'positions.*' => 'required|integer|min:1|distinct',
+        ], [
+            'positions.required' => 'Positions data is required.',
+            'positions.array' => 'Invalid data format for positions.',
+            'positions.*.required' => 'Each position value is required.',
+            'positions.*.integer' => 'Position values must be integers.',
+            'positions.*.min' => 'Position values must be at least 1.',
+            'positions.*.distinct' => 'Position values must be unique.',
+        ]);
 
+        foreach ($request->positions as $id => $pos) {
+            $car->images()->where('id', $id)->update([
+                'position' => $pos
+            ]);
+        }
+
+        return back()->with('success', 'Positions updated.');
     }
 
-    public function deleteImages(Car $car)
+    public function deleteImages(Request $request, Car $car)
     {
+        $request->validate([
+            'delete_images' => 'required|array',
+            'delete_images.*' => 'integer|exists:car_images,id',
+        ], [
+            'delete_images.required' => 'Please select at least one image to delete.',
+            'delete_images.array' => 'Invalid data format for images to delete.',
+            'delete_images.*.integer' => 'Invalid image ID provided.',
+            'delete_images.*.exists' => 'One or more selected images do not exist.',
+        ]);
 
+        $ids = $request->delete_images;
+
+        $car->images()->whereIn('id', $ids)->delete();
+
+        return back()->with('success', 'Images deleted.');
     }
 }
