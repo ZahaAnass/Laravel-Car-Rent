@@ -98,13 +98,17 @@
         <section>
             <div class="container">
                 <h2>Latest Added Cars</h2>
-                <div class="car-items-listing">
-                    @foreach($cars as $car)
-                        <x-car-item :$car
-                            isInWatchlist="{{$car->is_favourite ? true : false}}"
-                        />
-                    @endforeach
-                </div>
+                @if($cars->isEmpty())
+                    <p class="no-cars-message" style="text-align: center">No cars available at the moment. Please check back later.</p>
+                @else
+                    <div class="car-items-listing">
+                        @foreach($cars as $car)
+                            <x-car-item :$car
+                                isInWatchlist="{{$car->is_favourite ? true : false}}"
+                            />
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </section>
         <!--/ New Cars -->

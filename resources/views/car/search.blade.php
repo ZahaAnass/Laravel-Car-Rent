@@ -179,11 +179,15 @@
                     </div>
 
                     <div class="search-cars-results">
-                        <div class="car-items-listing">
-                            @foreach ($cars as $car)
-                                <x-car-item :$car />
-                            @endforeach
-                        </div>
+                        @if($cars->isEmpty())
+                            <p class="no-cars-message" style="text-align: center">No cars available at the moment. Please check back later.</p>
+                        @else
+                            <div class="car-items-listing">
+                                @foreach ($cars as $car)
+                                    <x-car-item :$car />
+                                @endforeach
+                            </div>
+                        @endif
                         {{ $cars->onEachSide(1)->links() }}
                     </div>
                 </div>
