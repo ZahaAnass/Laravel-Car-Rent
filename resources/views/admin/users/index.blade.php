@@ -51,10 +51,9 @@
                                     <td>{{ ucfirst($user->role) }}</td>
 
                                     @if($user->role === 'admin')
-                                        <td class="text-gray-500 italic">No actions available</td>
-                                    @endif
-
-                                    <td class="">
+                                        <td class="text-gray-500 italic" style="text-align: center; ">No actions available</td>
+                                    @else
+                                        <td class="">
                                         {{-- View --}}
                                         <a href="{{ route('admin.users.show', $user->id) }}"
                                            class="btn btn-edit inline-flex items-center">
@@ -95,6 +94,7 @@
                                             </button>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>
