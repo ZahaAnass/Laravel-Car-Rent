@@ -50,7 +50,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ ucfirst($user->role) }}</td>
 
-                                    @if($user->role === 'admin')
+                                    {{--@if($user->role === 'admin')--}}
+                                    @if($user->id === auth()->user()->id)
                                         <td class="text-gray-500 italic" style="text-align: center; ">No actions available</td>
                                     @else
                                         <td class="">

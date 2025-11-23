@@ -15,7 +15,7 @@
             @endif
 
             {{-- ============ USER INFO FORM ============ --}}
-            <form action="{{ route('admin.users.update', $user->id) }}"
+            <form action="{{ route('admin.users.update', $user) }}"
                   method="POST"
                   class="card add-new-car-form">
 

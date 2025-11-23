@@ -75,9 +75,29 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            "role" => "required|in:user,admin",
+            "phone" => "required|string|max:20",
+        ],[
+            'role.in' => 'The selected role is invalid. Choose either user or admin.',
+            'email.unique' => 'The email has already been taken.',
+            'name.required' => 'The name field is required.',
+            'email.required' => 'The email field is required.',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->phone = $request->phone;
+
+        if($user->save()){
+            return redirect()->route('admin.users.show', $user)->with('success', 'User updated successfully.');
+        }
+        return redirect()->route('admin.users.index')->with('error', 'Failed to update user.');
     }
 
     /**
