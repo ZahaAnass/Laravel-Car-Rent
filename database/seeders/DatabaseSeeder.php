@@ -109,8 +109,15 @@ class DatabaseSeeder extends Seeder
         // of these 2 users.
 
         User::factory()
-            ->count(3)
+            ->count(20)
             ->create();
+
+        User::factory()
+            ->state([
+                "role" => "admin",
+                "password" => bcrypt("admin1234"),
+                "email" => "admin@gmail.com"
+            ])->create();
 
         User::factory()
             ->count(2)

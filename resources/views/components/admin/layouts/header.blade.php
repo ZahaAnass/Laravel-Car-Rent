@@ -54,7 +54,7 @@
                         <a href="{{ route('admin.cars.index') }}">Cars</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.settings') }}">Settings</a>
+                        <a href="{{ route('admin.profile') }}">Profile</a>
                     </li>
                 </ul>
             </div>

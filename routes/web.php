@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileAdminController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -99,6 +100,9 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
 
     Route::patch("users/update-password/{user}", [AdminUserController::class, "updatePassword"])->name("users.updatePassword");
     Route::resource('users', AdminUserController::class); // manage users
-    Route::get("/settings", [AdminController::class, "setting"])->name("settings");
+    Route::get("/profile", [ProfileAdminController::class, "index"])->name("profile");
+    Route::patch("/profile/update", [ProfileAdminController::class, "updateProfile"])->name("profile.update");
+    Route::patch("/profile/update-password", [ProfileAdminController::class, "updatePassword"])->name("profile.updatePassword");
+    Route::delete("/profile/delete-account", [ProfileAdminController::class, "deleteAccount"])->name("profile.deleteAccount");
 });
 

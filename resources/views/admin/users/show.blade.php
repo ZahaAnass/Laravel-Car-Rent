@@ -37,6 +37,8 @@
 
                         <p><strong>Role:</strong> {{ ucfirst($user->role) }}</p>
 
+                        <p><strong>User Cars Count:</strong> {{ $user->cars_count }}</p>
+
                         <p>
                             <strong>Email Verified:</strong>
                             {{ $user->email_verified_at ? $user->email_verified_at->format('d M Y, H:i') : 'Not Verified' }}

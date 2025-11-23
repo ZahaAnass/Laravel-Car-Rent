@@ -63,6 +63,8 @@ class AdminUserController extends Controller
      */
     public function show(User $user)
     {
+        $carsCount = $user->cars()->count();
+        $user->cars_count = $carsCount;
         return view("admin.users.show", compact("user"));
     }
 
