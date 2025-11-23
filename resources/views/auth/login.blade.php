@@ -36,7 +36,11 @@
             @enderror
         </div>
 
-        <div class="text-right mb-medium">
+        <div class="mb-medium" style="display: flex; justify-content: space-between; align-items: center;">
+            <label for="remember">
+                <input type="checkbox" id="remember" name="remember" />
+                Remember Me
+            </label>
             <a href="{{ route("password-reset") }}" class="auth-page-password-reset">Reset Password</a>
         </div>
         <button class="btn btn-primary btn-login w-full">Login</button>
