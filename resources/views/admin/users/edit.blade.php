@@ -22,11 +22,10 @@
                 @csrf
                 @method('PATCH')
 
-                <h2 class="mb-4">User Information</h2>
 
                 <div class="form-content">
                     <div class="form-details">
-
+                        <h2 class="mb-4">User Information</h2>
                         {{-- Row 1: Name + Email --}}
                         <div class="row">
                             <div class="col">
@@ -88,20 +87,18 @@
 
 
             {{-- ============ PASSWORD FORM ============ --}}
-            <form action="{{ route('admin.users.updatePassword', $user->id) }}"
+            <form action="{{ route('admin.users.updatePassword', $user) }}"
                   method="POST"
-                  class="card add-new-car-form mt-6">
+                  class="card add-new-car-form mt-6" style="margin-top: 2rem;">
 
                 @csrf
                 @method('PATCH')
 
-                <h2 class="mb-4">Change Password</h2>
-
-                <p class="text-muted mb-3">Leave empty if you don't want to change the password.</p>
 
                 <div class="form-content">
                     <div class="form-details">
-
+                        <h2 class="mb-4">Change Password</h2>
+                        <p class="text-muted mb-3">Leave empty if you don't want to change the password.</p>
                         {{-- Row 3: New Password --}}
                         <div class="row">
                             <div class="col">

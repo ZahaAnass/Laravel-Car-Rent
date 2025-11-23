@@ -97,7 +97,7 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
 
     Route::resource('cars', AdminCarController::class); // manage cars
 
-    Route::patch("users/update-password", [AdminUserController::class, "updatePassword"])->name("users.updatePassword");
+    Route::patch("users/update-password/{user}", [AdminUserController::class, "updatePassword"])->name("users.updatePassword");
     Route::resource('users', AdminUserController::class); // manage users
     Route::get("/settings", [AdminController::class, "setting"])->name("settings");
 });
