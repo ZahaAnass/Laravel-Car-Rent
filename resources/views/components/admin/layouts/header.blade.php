@@ -60,7 +60,7 @@
             </div>
 
             <!-- Logout Button -->
-            <a href="{{ route('logout') }}" class="btn btn-primary flex items-center">
+            <a href="{{ route('admin.logout') }}" class="btn btn-primary flex items-center">
                 <svg
                     style="width: 18px; fill: currentColor; margin-right: 4px"
                     viewBox="0 0 1024 1024"

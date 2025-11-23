@@ -16,26 +16,24 @@ use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
-| 1. Public Routes (Accessible by everyone)
+| 1. Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get("/", [HomeController::class, "index"])->name("home");
+Route::get("/", [HomeController::class, "index"])->name("home")
+->middleware("redirect.admin");
 
-// Google Auth (Must be public to handle the redirect/callback)
+
+// Google OAuth
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
-
 /*
 |--------------------------------------------------------------------------
-| 2. Guest Routes (Only for people NOT logged in)
+| 2. Guest Routes
 |--------------------------------------------------------------------------
-| Middleware: 'guest'
-| If a logged-in user tries to go here, they are redirected to Home.
 */
 Route::middleware(['guest'])->group(function () {
-
-    // Auth Pages
+    // Auth
     Route::get("/signup", [SignupController::class, "index"])->name("signup");
     Route::post("/signup", [SignupController::class, "signup"])->name("signup.post");
     Route::get("/login", [LoginController::class, "index"])->name("login");
@@ -48,26 +46,21 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
-
 /*
 |--------------------------------------------------------------------------
-| 3. Protected Routes (Only for LOGGED IN users)
+| 3. User Routes (auth + user)
 |--------------------------------------------------------------------------
-| Middleware: 'auth'
-| If a guest tries to go here, they are redirected to Login.
 */
-Route::middleware(['auth'])->group(function () {
-
-    // Logout
+Route::middleware(['auth', 'user'])->group(function () {
     Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 
-    // User Profile Management
+    // Profile
     Route::get("/profile", [ProfileController::class, "index"])->name("profile");
     Route::patch("/profile/update", [ProfileController::class, "updateProfile"])->name("profile.update");
     Route::patch("/profile/update-password", [ProfileController::class, "updatePassword"])->name("profile.updatePassword");
     Route::delete("/profile/delete-account", [ProfileController::class, "deleteAccount"])->name("profile.deleteAccount");
 
-    // Car Management
+    // Cars
     Route::get("/car/search", [CarController::class, "search"])->name("car.search");
     Route::get("/car/watchlist", [CarController::class, "watchlist"])->name("car.watchlist");
 
@@ -80,29 +73,33 @@ Route::middleware(['auth'])->group(function () {
     // Favorites
     Route::post('/favourite/{carId}', [CarController::class, 'toggleFavourite'])->name('favourite.toggle');
 
-    // The Resource (CRUD)
-    // Since this is inside the 'auth' group, you must be logged in to see/create/edit cars.
-    // If you want everyone to SEE cars but only users to CREATE them, move this outside (see note below).
+    // Car CRUD
     Route::resource("car", CarController::class);
 });
 
-Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(function () {
-    // Admin Dashboard
+/*
+|--------------------------------------------------------------------------
+| 4. Admin Routes (auth + admin)
+|--------------------------------------------------------------------------
+*/
+Route::prefix("admin")->name("admin.")->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 
-    // Car Images
+    // Admin Cars
     Route::get("/car/image/{car}", [AdminCarController::class, "image"])->name("cars.image");
     Route::post('/car/{car}/image', [AdminCarController::class, 'addImage'])->name('cars.addImage');
     Route::post('/car/{car}/images/positions', [AdminCarController::class, 'updatePositions'])->name('cars.updatePositions');
     Route::post('/car/{car}/images/delete', [AdminCarController::class, 'deleteImages'])->name('cars.deleteImages');
+    Route::resource('cars', AdminCarController::class);
 
-    Route::resource('cars', AdminCarController::class); // manage cars
-
+    // Admin Users
     Route::patch("users/update-password/{user}", [AdminUserController::class, "updatePassword"])->name("users.updatePassword");
-    Route::resource('users', AdminUserController::class); // manage users
+    Route::resource('users', AdminUserController::class);
+
+    // Admin Profile
     Route::get("/profile", [ProfileAdminController::class, "index"])->name("profile");
     Route::patch("/profile/update", [ProfileAdminController::class, "updateProfile"])->name("profile.update");
     Route::patch("/profile/update-password", [ProfileAdminController::class, "updatePassword"])->name("profile.updatePassword");
     Route::delete("/profile/delete-account", [ProfileAdminController::class, "deleteAccount"])->name("profile.deleteAccount");
 });
-
